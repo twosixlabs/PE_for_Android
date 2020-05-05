@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<sdk:sdk-addon
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:sdk="http://schemas.android.com/sdk/android/addon/7">
+    <sdk:add-on>
+        <sdk:vendor-id>two_six_labs</sdk:vendor-id>
+        <sdk:vendor-display>Two Six Labs</sdk:vendor-display>
+        <sdk:name-id>peandroid_add-on</sdk:name-id>
+        <sdk:name-display>PE for Android</sdk:name-display>
+        <sdk:description>PE for Android Add-on</sdk:description>
+        <sdk:api-level>28</sdk:api-level>
+        <sdk:revision>1</sdk:revision>
+        <sdk:libs>
+           <sdk:lib><sdk:name>com.twosixlabs.peandroid</sdk:name></sdk:lib>
+           <sdk:lib><sdk:name>com.twosixlabs.peandroid.pal</sdk:name></sdk:lib>
+           <sdk:lib><sdk:name>com.twosixlabs.peandroid.privacymanager</sdk:name></sdk:lib>
+        </sdk:libs>
+        <sdk:archives>
+            <sdk:archive>
+                <sdk:size>1486330</sdk:size>
+                <sdk:checksum type='sha1'>d2b2b397813914a2d43529b8badd2603aa386085</sdk:checksum>
+                <sdk:url>https://github.com/twosixlabs/PE_for_Android/releases/download/peandroid_v5.0.0/pea_pie_sdk_addon_v1.zip</sdk:url>
+        <sdk:host-os>macosx</sdk:host-os>
+            </sdk:archive>
+            <sdk:archive>
+                <sdk:size>1486330</sdk:size>
+                <sdk:checksum type='sha1'>d2b2b397813914a2d43529b8badd2603aa386085</sdk:checksum>
+                <sdk:url>https://github.com/twosixlabs/PE_for_Android/releases/download/peandroid_v5.0.0/pea_pie_sdk_addon_v1.zip</sdk:url>
+        <sdk:host-os>linux</sdk:host-os>
+            </sdk:archive>
+            <sdk:archive>
+                <sdk:size>1486330</sdk:size>
+                <sdk:checksum type='sha1'>d2b2b397813914a2d43529b8badd2603aa386085</sdk:checksum>
+                <sdk:url>https://github.com/twosixlabs/PE_for_Android/releases/download/peandroid_v5.0.0/pea_pie_sdk_addon_v1.zip</sdk:url>
+        <sdk:host-os>windows</sdk:host-os>
+            </sdk:archive>
+        </sdk:archives>
+    </sdk:add-on>
+</sdk:sdk-addon>

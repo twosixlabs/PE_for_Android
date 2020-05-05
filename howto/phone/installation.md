@@ -1,0 +1,176 @@
+# How-to: Install PE for Android on a phone
+
+* [Overview](#overview)
+* [Initial device preparation](#initial-device-preparation)
+    + [Unlocking the bootloader](#unlocking-the-bootloader)
+    + [Flashing the correct base Android version](#flashing-the-correct-base-android-version)
+* [Flashing PE for Android](#flashing-pe-for-android)
+* [Google Play installation](#google-play-installation)
+    + [Installing Open GApps](#installing-open-gapps)
+    + [Register custom ROM with Google Play Services](#register-custom-rom-with-google-play-services)
+
+## Overview
+
+PE for Android was forked from AOSP's [Generic System Images
+(GSI)](https://developer.android.com/topic/generic-system-image) for Android Pie and should be
+compatible with any [Project Treble-compliant
+device](https://play.google.com/store/apps/details?id=com.kevintresuelo.treble&hl=en_US) that meet
+[these requirements](https://source.android.com/setup/build/gsi#flashing-gsis). Through our
+development we have tested PE for Android with the Pixel 2XL and Pixel 3aXL, although other
+Pixel devices should behave similarly to those. Below is a table of Google Pixel devices
+and the corresponding images that should be compatible with the phone. The images for the various
+types of GSI builds are available [here](https://github.com/twosixlabs/PE_for_Android/releases).
+
+
+| Device | Codename | GSI Image Type |
+|--------|----------|----------------|
+| Pixel 2 | walleye | gsi_ab |
+| Pixel 2XL | taimen | gsi_ab |
+| Pixel 3 | blueline | gsi|
+|Pixel 3XL | crosshatch | gsi |
+|Pixel 3a | sargo | gsi |
+|Pixel 3aXL | bonito | gsi |
+
+
+While we have only tested on Pixel devices, installing PE for Android on other GSI-compatible
+devices will take similar steps to these specified here. Please refer to the [official GSI
+documentation](https://source.android.com/setup/build/gsi) for more information on GSI's
+in general. Additionally, the [XDA Developer forums](https://forum.xda-developers.com/) 
+contain a wealth of information that may be useful in flashing the PE for Android GSI
+to your phone.
+
+
+These instructions assume familiarity with the command line and that the
+Android command-line tools (e.g., _adb_ and _fastboot_) are already installed
+on your system.  These tools are part of Android Studio but may also be
+installed separately.  This software is available for download on the [Android
+Studio downloads page](https://developer.android.com/studio/#downloads).
+
+## Initial device preparation
+
+These steps are only necessary for bootloader-locked devices running stock
+Android. If your device's bootloader is already unlocked, you may skip that
+process. Likewise, if your bootloader-unlocked device is already running an
+appropriate version of Android, you may skip this section altogether.
+
+### Unlocking the bootloader
+
+Unlocking the bootloader allows users to manipulate the device's partitions and
+install new system images, including PE for Android GSI images. While each device
+may have different steps below is a link to the process to unlock Google Devices.
+Again, if you do not have a Google device it is best to refer to the 
+[XDA Developer forums](https://forum.xda-developers.com/) to see if and how your
+device bootloader may be unlocked.
+
+**WARNING**: The process of unlocking the bootloader will factory-reset your
+device. Please ensure you have a backup of your data before proceeding.
+
+* [Unlocking the Bootloader on Google Devices](https://source.android.com/setup/build/running#unlocking-the-bootloader)
+
+**NOTE**: Unlocking the bootloader will cause the device to display a boot
+warning that reads "The bootloader is unlocked and software integrity
+cannot be guaranteed." You may ignore this message.
+
+### Flashing the correct base Android version
+
+For flashing GSIs we have discovered some nuances to both installing on the Pixel 3aXL,
+as well as the 2XL.
+
+We have found the for the Pixel 3aXL, you must start from a stock
+Android 9 base image to ensure the appropriate vendor binaries are on the device
+to allow the various hw components to work. We have not found a method for installing the 
+the PE for Android GSI over a stock Android 10 Pixel 3aXL.
+
+For the Pixel 2XL, we have discovered only a specific version of stock firmware that 
+allows for a clean boot. If flashing for the Pixel 2XL, please first flash the
+[PQ3A.190605.003, Jun 2019](https://dl.google.com/dl/android/aosp/taimen-pq3a.190605.003-factory-59303ad9.zip)
+build.
+
+For flashing instructions and stock images for Pixel devices, please refer to Google's
+website.
+
+[Pixel Factory Images](https://developers.google.com/android/images)
+
+
+## Flashing PE for Android
+
+After following the above instructions to [prepare a new
+device](#initial-device-preparation), the device will be ready to install PE
+for Android.
+
+1. Download *vbmeta.img* and *system.img* for the appropriate PE for Android
+release available
+[here](https://github.com/twosixlabs/PE_for_Android/releases). Alternatively,
+these files may be generated by [building PE for Android from
+source](https://github.com/twosixlabs/PE_for_Android/blob/master/howto/platform/platform.md).
+2. Connect the device to your computer via USB
+2. Boot into the bootloader with `adb reboot bootloader`
+3. Run the following commands to install the downloaded *.img* files:
+
+	```
+	$ fastboot --disable-verification flash vbmeta vbmeta.img
+	$ fastboot erase system
+	$ fastboot flash system system.img
+	$ fastboot -w
+	$ fastboot reboot
+	```
+
+## Google Play Installation
+
+PE for Android does not come with proprietary Google apps (e.g., Google Maps,
+Play Store, Gmail, etc.) commonly found on most Android phones. These must
+be installed separately after flashing PE for Android. This is commonly achieved
+through a custom device recovery and appropriate download from OpenGapps
+
+### Installing Open Gapps
+
+To install OpenGapps, the TWRP custom recovery is commonly used and generally
+widely supported for various devices. The TWRP custom recovery allows the user
+to install packages (such as Google apps) to the normally write-protected system
+partition. The following instructions show how to boot to TWRP and install OpenGapps.
+
+PE for Android increased the system partition size to more easily allow for
+the installation of OpenGapps. However, this increase is only suitable for installing
+the *pico* variant for Android 9.0 on ARM64 found [here](https://opengapps.org/).
+
+**Note:** If the device already has TWRP, you may skip to step ***#5*** in instructions and 
+continue installing the Open GApps package.
+
+1. Download the latest version of TWRP for your device from
+[TWRP's webpage](https://twrp.me/Devices/). You will only need the *img* file, unless you want to permanently install TWRP.
+2. Download Open GApps (*pico* variant) for Android 9.0 on ARM64 [here](https://opengapps.org/)
+3. Enter fastboot mode on your phone either by key combination or `adb reboot bootloader` if your phone is powered on
+4. Temporarily boot into TWRP with `fastboot boot twrp-<device>-a.b.c-d.img`
+5. When TWRP boots up, run `*adb push open_gapps-arm64-9.0-pico-yyyymmdd.zip /sdcard/*`
+6. Select "Install" and navigate to /sdcard and select '*open_gapps-arm64-9.0-pico-yyyymmdd.zip*'
+7. Activate the slider to install Open GApps
+9. When finished, reboot the device back to the home screen
+
+**NOTE**: If the screen is unresponsive in step 5, try issuing the following
+commands from the shell:
+
+```shell
+$ adb shell
+$ twrp install /sdcard/open_gapps-arm64-9.0-pico-yyyymmdd.zip
+$ reboot
+```
+
+If you re-flash *system.img* on the device (i.e., update to a newer
+version of PE for Android), you will need to follow the [Installing Open GApps](#installing-open-gapps)
+steps again. Failing to re-install Open GApps will result in Google Play
+Services constantly crashing.
+
+### Register custom ROM with Google Play Services
+
+The phone will have a constant stream of notifications saying the device is not
+compliant with Google policies. Tapping on the notification will take you to a
+URL that's hard to read on the phone. Go
+[here](https://g.co/AndroidDeviceRegistration) to register the phone.
+
+The commands on the page generate a long number to paste into the page and
+click Register. Once you've done that, reboot the phone. 
+
+Within a couple of minutes, the Play Protect messages should stop and you will
+see ones related to updating Play Services and app update availability in the
+Play Store.
+

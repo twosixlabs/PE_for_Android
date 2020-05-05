@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<sdk:sdk-sys-img
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:sdk="http://schemas.android.com/sdk/android/sys-img/3">
+    <sdk:system-image>
+        <sdk:revision>1</sdk:revision>
+        <sdk:description>PE for Android System Image, API 28</sdk:description>
+        <sdk:api-level>28</sdk:api-level>
+        <sdk:abi>x86_64</sdk:abi>
+        <sdk:tag-id>pe_android</sdk:tag-id>
+        <sdk:tag-display>PE for Android</sdk:tag-display>
+          <sdk:add-on>
+            <sdk:vendor-id>two_six_labs</sdk:vendor-id>
+            <sdk:vendor-display>Two Six Labs</sdk:vendor-display>
+          </sdk:add-on>
+        <sdk:archives>
+            <sdk:archive>
+                <sdk:size>620625027</sdk:size>
+                <sdk:checksum type='sha1'>393f0d01947b8cdb0508e77073a4644a81cdecd3</sdk:checksum>
+                <sdk:url>https://github.com/twosixlabs/PE_for_Android/releases/download/peandroid_v5.0.0/pea_pie_system-images_v1.zip</sdk:url>
+        <sdk:host-os>macosx</sdk:host-os>
+            </sdk:archive>
+            <sdk:archive>
+                <sdk:size>620625027</sdk:size>
+                <sdk:checksum type='sha1'>393f0d01947b8cdb0508e77073a4644a81cdecd3</sdk:checksum>
+                <sdk:url>https://github.com/twosixlabs/PE_for_Android/releases/download/peandroid_v5.0.0/pea_pie_system-images_v1.zip</sdk:url>
+        <sdk:host-os>linux</sdk:host-os>
+            </sdk:archive>
+            <sdk:archive>
+                <sdk:size>620625027</sdk:size>
+                <sdk:checksum type='sha1'>393f0d01947b8cdb0508e77073a4644a81cdecd3</sdk:checksum>
+                <sdk:url>https://github.com/twosixlabs/PE_for_Android/releases/download/peandroid_v5.0.0/pea_pie_system-images_v1.zip</sdk:url>
+        <sdk:host-os>windows</sdk:host-os>
+            </sdk:archive>
+        </sdk:archives>
+    </sdk:system-image>
+</sdk:sdk-sys-img>
